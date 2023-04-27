@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "ToDo page";
+}
+
+
+
+<h1>Todo List</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Description</th>
+            <th>Is Completed</th>
+            <th>Due Date</th>
+            <th>Priority</th>
+            <th>Created by</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var todo in Model)
+        {
+            <tr>
+                <td class="@(todo.IsCompleted ? "completed" : "")">@todo.Description</td>
+                <td>@(todo.IsCompleted ? "Yes" : "No")</td>
+                <td>@(todo.DueDate?.ToString("yyyy-MM-dd") ?? "N/A")</td>
+                <td>@todo.Priority</td>
+                <td>@(todo.ApplicationUser != null ? todo.ApplicationUser.UserName : "N/A")</td>
+                <td>
+                    <!-- Add action links for Edit and Details if needed -->
+                    <a asp-action="Edit" asp-route-id="@todo.Id" class="btn btn-primary">Edit</a>
+
+                    <a asp-action="Delete" asp-route-id="@todo.Id" class="btn btn-danger">Delete</a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Create" class="btn btn-primary">Add New Todo</a>
